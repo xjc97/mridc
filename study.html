@@ -52,26 +52,55 @@
   }
 
   .image-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .image-box {
-    border: 1px solid #000;
-    width: 45%;
-    height: auto;
-    max-height: 512px;
-    max-width: 512px;
-    margin: 0 30px;
-  }
+        display: flex;
+        flex-wrap: wrap;  /* 让图片框在超出一行时换行 */
+        justify-content: center;
+        align-items: center;
+    }
+    .image-box {
+        border: 1px solid #000;
+        width: 45%;        /* 每个图片框宽度为45%（两张图片在一行显示） */
+        height: auto;
+        max-height: 512px;
+        max-width: 512px;
+        margin: 30px 30px;
+        position: relative;
+        display: flex;            /* 使图片框成为flex容器 */
+        justify-content: center;  /* 水平居中图片 */
+        align-items: center;      /* 垂直居中图片 */
+    }
   .image-container .image-box:nth-child(1) {
-    border: 10px solid blue; /* 左图蓝色边框 */
+    border: 10px solid blue; 
    }
 
    .image-container .image-box:nth-child(2) {
-    border: 10px solid orange; /* 右图橙色边框 */
+    border: 10px solid orange; 
    }
 
+   .image-container .image-box:nth-child(3) {
+        border: 10px solid red; 
+   }
+
+   .image-container .image-box:nth-child(4) {
+        border: 10px solid green; 
+   }
+   .image-box img {
+        max-width: 100%;      /* 保证图片宽度不会超出容器 */
+        max-height: 100%;     /* 保证图片高度不会超出容器 */
+        object-fit: contain;  /* 保证图片不失真地填充容器 */
+    }
+    .image-container .image-number {
+        position: absolute;
+        bottom: -60px;  /* 将序号放置在图片框下方，距离底部 60px */
+        left: 50%;     /* 序号水平居中 */
+        transform: translateX(-50%);  /* 完全居中 */
+        font-size: 24px;
+        font-weight: bold;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);  /* 半透明黑色背景 */
+        padding: 5px;
+        border-radius: 5px;
+    }
 
   .preferences {
     text-align: center;
@@ -122,31 +151,63 @@
         background-color: orange;
         color: white;
     }
+    #visual3:checked::after{
+        background-color: red;
+        color: white;
+    }
+    #visual4:checked::after{
+        background-color: green;
+        color: white;
+    }
+
     #text1:checked::after{
         background-color: blue;
         color: white;
     }
-    
     #text2:checked::after{
         background-color: orange;
         color: white;
     }
-    #layout1:checked::after{
+    #text3:checked::after{
+        background-color: red;
+        color: white;
+    }
+    #text4:checked::after{
+        background-color: green;
+        color: white;
+    }
+
+    #details1:checked::after{
         background-color: blue;
         color: white;
     }
-    
-    #layout2:checked::after{
+    #details2:checked::after{
         background-color: orange;
         color: white;
     }
-    #bg1:checked::after{
+    #details3:checked::after{
+        background-color: red;
+        color: white;
+    }
+    #details4:checked::after{
+        background-color: green;
+        color: white;
+    }
+
+    #realism1:checked::after{
         background-color: blue;
         color: white;
     }
-    
-    #bg2:checked::after{
+    #realism2:checked::after{
         background-color: orange;
+        color: white;
+    }
+    #realism3:checked::after{
+        background-color: red;
+        color: white;
+    }
+    #realism4:checked::after{
+        background-color: green;
         color: white;
     }
     
@@ -261,14 +322,14 @@
 #prevButton {
     position: absolute;
     left: 0; /* 放置在容器的最左边 */
-    top: 50%; /* 垂直居中 */
+    top: 250%; 
     transform: translateY(-50%); /* 精确居中对齐 */
 }
 
 #nextButton {
     position: absolute;
     right: 0; /* 放置在容器的最右边 */
-    top: 50%; /* 垂直居中 */
+    top: 250%; 
     transform: translateY(-50%); /* 精确居中对齐 */
 }
 
@@ -305,34 +366,40 @@
     <div class="highlight-block">
         <h2 data-lang-key="overalltitle">整体说明</h2>
         <ul data-lang-key="overalltext">
-            这是一个用户评估实验，旨在衡量两种图像压缩生成方法之间的效果，以比较两种方法在多项指标下的人类偏好。本实验主要关注于以下四个重点指标：
-            <li> 原图相似度：这一项指标需要评价哪种方法生成的图像和原图更贴近。</li> 
-            <li> 图片纹理保留程度：需要评价您认为那种方式生成的图片纹理效果更好。 </li> 
-            <li> 图片细节保留程度：需要评价您认为那种方式生成的图片细节效果更好。 </li> 
-            <li> 整体美观度：需要评价您认为那种方式生成的图片更美观。 </li> 
-            再次感谢您的参与！</ul>
+            这是一个<b>用户评估实验</b>，旨在衡量四种图像压缩生成方法之间的效果，以比较四种方法在多项指标下的人类偏好。本实验主要关注于以下四个重点<b>指标</b>：
+            <li> <b>整体美观度</b>：需要评价您认为哪种方式生成的图片更美观。</li> 
+            <li> <b>图片整体和原图相似度</b>：需要评价您认为哪种方式生成的图片整体效果更好。 </li> 
+            <li> <b>RoI区域内和原图相似度</b>：需要评价您认为哪种方式生成的图片 ROI 区域内（ROI区域在正上方图片中，即原图，已用黄色框标注）效果更好。 </li> 
+            <li> <b>真实度</b>： 需要您评价您认为哪种方式生成的图片更贴近真实图片。</li> 
+            <p style="font-size: 18px; line-height: 1;">
+                <b>请注意：</b>
+                <li>测评结束时：点击 <b>'发送结果'</b> 按钮将尝试通过Outlook发送电子邮件。如果无法访问Outlook，请不要惊慌，只需点击总结页面上的 <b>'下载结果'</b> 按钮，下载一个JSON格式的文件（此文件仅记录测试结果），并将其发送给我们。邮箱地址为：<b>2401210335@stu.pku.edu.cn</b> </li>
+                <li>测评时：由于网络原因，图片不一定及时加载。<b>如果图片已完全加载，背景将呈现浅绿色；如果图片未完全加载，则背景将呈现浅黄色。请在背景变为浅绿色后进行评估。</b> </>
+            </p>
+            <b>非常感谢您对本实验的支持，图像压缩的历史将铭记您的贡献！</b>
+        </ul>
     </div>
     <div class="highlight-block">
         <h2 data-lang-key="evaluationpipeline">评估流程</h2>
         <ul>
-            <li data-lang-key="starteval">点击 '开始评测' 按钮进入主评估页面。</li>
-            <li data-lang-key="readintention">正上方图片为原图，下方两张图片为两种图像压缩生成方法实验结果，请对下方两张图的评估，在不同指标上选择更有优势的一张图片。左图标为1，右图标为2。</li>
+            <li data-lang-key="starteval">点击 <b>'开始评测'</b> 按钮进入主评估页面。</li>
+            <li data-lang-key="readintention"><b>正上方图片为原图</b>，下方四张图片为四种图像压缩生成方法实验结果，请对下方四张图的评估，在不同指标上<b>选择更有优势的一张图片。</b></li>
             <li data-lang-key="usenavigation">使用 '上一张' 和 '下一张' 按钮继续进行下一对图像的评估。</li>
-            <li data-lang-key="completeeval">评估完成后，点击底部的 '前往总结页面' 按钮结束评估。</li>
-            <li data-lang-key="checkmissed">请先检查是否有遗漏的图像评估。如果有，您可以点击 '返回评估'。在底部滑块中输入相应的索引号，切换到特定的图像对，并完成遗漏的评估。</li>
-            <li data-lang-key="sendresults">如果所有评估都完成了，请点击 '发送结果' 按钮通过邮件将结果发送给我们。</li>
+            <li data-lang-key="completeeval"><b>评估完成后</b>，点击底部的 <b>'前往总结页面'</b> 按钮结束评估。</li>
+            <li data-lang-key="checkmissed">请先检查是否有<b>遗漏</b>的图像评估。如果有，您可以点击 <b>'返回评估'</b>。在底部滑块中输入相应的索引号，切换到特定的图像对，并完成遗漏的评估。</li>
+            <li data-lang-key="sendresults">如果所有<b>评估都完成</b>了，请点击 <b>'发送结果'</b> 按钮通过邮件将结果发送给我们。</li>
         </ul>
     </div>
     <div class="highlight-block">
         <h2 data-lang-key="keynotes">关键提示</h2>
         <ul>
-            <li data-lang-key="visualappealnote">评估前可以先清除历史记录，以避免和其他评测冲突。</li>
+            <li data-lang-key="visualappealnote">评估前可以先<b>清除历史记录</b>，以避免和其他评测冲突。</li>
             <li data-lang-key="recommendationnote">我们强烈建议使用电脑作为终端，并使用Edge浏览器打开网页，以获得最佳体验。</li>
             <li data-lang-key="resumingnote">本网页支持从中断处继续评估。如果不小心关闭了网页，请不必担心，只需在同一浏览器中重新打开即可继续。</li>
-            <li data-lang-key="networknote">由于网络原因，图片不一定及时加载。如果图片已完全加载，背景将呈现浅绿色；如果图片未完全加载，则背景将呈现浅黄色。请在背景变为浅绿色后进行评估。</li>
-            <li data-lang-key="shuffleimagesnote">图片顺序已进行混淆，即左边的图片并不一定来自一个图像生成器，右边的图片来自另一个。</li>
-            <li data-lang-key="sendresultsnote">点击 '发送结果' 按钮将尝试通过Outlook发送电子邮件。如果无法访问Outlook，请不要惊慌，只需点击总结页面上的 '下载结果' 按钮，下载一个JSON文件，并将其发送给我们。</li>
-            <li data-lang-key="thankyounote"><b>非常感谢您对本实验的支持，图像压缩的历史将铭记您的贡献。</b></li>
+            <li data-lang-key="networknote">由于网络原因，图片不一定及时加载。<b>如果图片已完全加载，背景将呈现浅绿色；如果图片未完全加载，则背景将呈现浅黄色。请在背景变为浅绿色后进行评估。</b></li>
+            <li data-lang-key="shuffleimagesnote"><b>图片顺序已进行混淆</b>，即同一个颜色框内的图片，不一定来自同一个图像生成器。</li>
+            <li data-lang-key="sendresultsnote">点击 <b>'发送结果'</b> 按钮将尝试通过Outlook发送电子邮件。如果无法访问Outlook，请不要惊慌，只需点击总结页面上的 <b>'下载结果'</b> 按钮，下载一个JSON格式的文件（此文件仅记录测试结果），并将其发送给我们。邮箱地址为：<b>2401210335@stu.pku.edu.cn</b> </li>
+            <!-- <li data-lang-key="thankyounote"><b>非常感谢您对本实验的支持，图像压缩的历史将铭记您的贡献！</b></li> -->
         </ul>
     </div>
     <!-- <button onclick="showPage('mainPage')"></button> -->
@@ -349,11 +416,24 @@
 
     
     <div class="image-container">
-      <img src="URL_TO_FIRST_IMAGE" alt="First Image" class="image-box" onerror="handleImageError()">
-      <!-- <div id="gray-image">Image not available</div> -->
-      <img src="URL_TO_SECOND_IMAGE" alt="Second Image" class="image-box" onerror="handleImageError()">
-      <!-- <div id="gray-image">Image not available</div> -->
+        <div class="image-box">
+            <img src="URL_TO_FIRST_IMAGE" alt="First Image" onerror="handleImageError()">
+            <div class="image-number">1</div>
+        </div>
+        <div class="image-box">
+            <img src="URL_TO_SECOND_IMAGE" alt="Second Image" onerror="handleImageError()">
+            <div class="image-number">2</div>
+        </div>
+        <div class="image-box">
+            <img src="URL_TO_THIRD_IMAGE" alt="Third Image" onerror="handleImageError()">
+            <div class="image-number">3</div>
+        </div>
+        <div class="image-box">
+            <img src="URL_TO_FOURTH_IMAGE" alt="Fourth Image" onerror="handleImageError()">
+            <div class="image-number">4</div>
+        </div>
     </div>
+    
     
     <button id="prevButton" class="button" onclick="changeImage(-1)">&#8592; 上一张</button>
     <button id="nextButton" class="button" onclick="changeImage(1)">下一张 &#8594;</button>
@@ -362,37 +442,53 @@
         <table align="center" cellspacing="20">
             <tr>
                 <td>
-                    <label><h3>原图相似度:</h3></label>
+                    <label><h3>整体美观度:</h3></label>
                                         <input type="radio" id="visual1" name="visual" value="1">
                     <label for="visual1">1</label>
                     <input type="radio" id="visual2" name="visual" value="2">
                     <label for="visual2">2</label>
+                    <input type="radio" id="visual3" name="visual" value="3">
+                    <label for="visual3">3</label>
+                    <input type="radio" id="visual4" name="visual" value="4">
+                    <label for="visual4">4</label>
 
                 </td>
                 <td>
-                    <label><h3>图片纹理保留程度:</h3></label>
+                    <label><h3>图片整体和原图相似度:</h3></label>
                     <input type="radio" id="text1" name="text" value="1">
                     <label for="text1">1</label>
                     <input type="radio" id="text2" name="text" value="2">
                     <label for="text2">2</label>
+                    <input type="radio" id="text3" name="text" value="3">
+                    <label for="text3">3</label>
+                    <input type="radio" id="text4" name="text" value="4">
+                    <label for="text4">4</label>
                 </td>              
 
             </tr>
             <tr>
                 <td>
-                    <label><h3>图片细节保留程度:</h3></label>
-                    <input type="radio" id="layout1" name="layout" value="1">
-                    <label for="layout1">1</label>
-                    <input type="radio" id="layout2" name="layout" value="2">
-                    <label for="layout2">2</label>                    
+                    <label><h3>RoI区域内和原图相似度:</h3></label>
+                    <input type="radio" id="details1" name="details" value="1">
+                    <label for="details1">1</label>
+                    <input type="radio" id="details2" name="details" value="2">
+                    <label for="details2">2</label> 
+                    <input type="radio" id="details3" name="details" value="3">
+                    <label for="details3">3</label>
+                    <input type="radio" id="details4" name="details" value="4">
+                    <label for="details4">4</label>
                 </td>
 
                 <td>
-                    <label><h3>整体美观度:</h3></label>
-                    <input type="radio" id="bg1" name="bg" value="1">
-                    <label for="bg1">1</label>
-                    <input type="radio" id="bg2" name="bg" value="2">
-                    <label for="bg2">2</label>                    
+                    <label><h3>真实度:</h3></label>
+                    <input type="radio" id="realism1" name="realism" value="1">
+                    <label for="realism1">1</label>
+                    <input type="radio" id="realism2" name="realism" value="2">
+                    <label for="realism2">2</label> 
+                    <input type="radio" id="realism3" name="realism" value="3">
+                    <label for="realism3">3</label>
+                    <input type="radio" id="realism4" name="realism" value="4">
+                    <label for="realism4">4</label>
                 </td>
             </tr>
         </table>
@@ -417,8 +513,10 @@
 </div>
 
 <div id="conclusionPage" class="page">
-  <h1>THANK YOU!</h1>
-  <h3>THANK YOU VERY MUCH FOR YOUR SUPPORT IN THIS EXPERIMENT. THE HISTORY OF IMAGE COMPRESSION WILL REMEMBER YOUR CONTRIBUTION.</h3>
+  <h1>感谢您的参与！</h1>
+  <h2>请您点击下方 '发送结果' 按钮，将测评结果发送给我们！</h2>
+  <h2>如果不能发送结果，请您点击 '下载结果' 按钮，并将结果发送至邮箱: 2401210335@stu.pku.edu.cn</h2>
+  <h3>非常感谢您在本次实验中的支持！图像压缩的历史将铭记您的贡献！</h3>
   <div class="content">
     
     <div class="highlight-block">
@@ -438,180 +536,230 @@
 
     var images =[
     {
-        "titleImage": "https://i.postimg.cc/HnFRhZT1/000000009426.jpg",
-        "img1": "https://i.postimg.cc/FH6dn0Lg/000000009426.jpg",
-        "img2": "https://i.postimg.cc/GmXV0mLj/000000009426.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/FsJ2L4xr/000000025360.jpg",
-        "img1": "https://i.postimg.cc/vmDjGwDw/000000025360.jpg", 
-        "img2": "https://i.postimg.cc/LXKqmRvJ/000000025360.jpg" 
+        "titleImage": "https://i.postimg.cc/FzPmxQYD/000000009426.jpg",
+        "img1": "https://i.postimg.cc/y6DPXJ1F/000000009426.jpg",
+        "img2": "https://i.postimg.cc/FH6dn0Lg/000000009426.jpg",
+        "img3": "https://i.postimg.cc/GmXV0mLj/000000009426.jpg",
+        "img4": "https://i.postimg.cc/Y0CzJ9Yw/000000009426.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/P5W9SQc0/000000051304.jpg",
-        "img1": "https://i.postimg.cc/nV1sfymL/000000051304.jpg",
-        "img2": "https://i.postimg.cc/G3vfLQ3t/000000051304.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/CKJtgLwN/000000056244.jpg",
-        "img1": "https://i.postimg.cc/gjytgYt8/000000056244.jpg", 
-        "img2": "https://i.postimg.cc/tCCsqBdN/000000056244.jpg"  
+        "titleImage": "https://i.postimg.cc/FsBNdN5K/000000025360.jpg",
+        "img1": "https://i.postimg.cc/vmDjGwDw/000000025360.jpg",
+        "img2": "https://i.postimg.cc/CLDsXWf5/000000025360.jpg",
+        "img3": "https://i.postimg.cc/gcgD3Vbc/000000025360.jpg",
+        "img4": "https://i.postimg.cc/LXKqmRvJ/000000025360.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/R0v8ynxh/000000065270.jpg",
+        "titleImage": "https://i.postimg.cc/qv602S4x/000000051304.jpg",
+        "img1": "https://i.postimg.cc/25HQnYgc/000000051304.jpg",
+        "img2": "https://i.postimg.cc/G3vfLQ3t/000000051304.jpg",
+        "img3": "https://i.postimg.cc/YCWzcTGj/000000051304.jpg",
+        "img4": "https://i.postimg.cc/nV1sfymL/000000051304.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/YSc7RRSK/000000056244.jpg",
+        "img1": "https://i.postimg.cc/gjytgYt8/000000056244.jpg",
+        "img2": "https://i.postimg.cc/fbQjM5mC/000000056244.jpg",
+        "img3": "https://i.postimg.cc/tCCsqBdN/000000056244.jpg",
+        "img4": "https://i.postimg.cc/1zR0gX7V/000000056244.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/PqmjRDLL/000000065270.jpg",
         "img1": "https://i.postimg.cc/9QDzTzn4/000000065270.jpg",
-        "img2": "https://i.postimg.cc/RFHDn1cP/000000065270.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/SssPNFsp/000000086168.jpg",
-        "img1": "https://i.postimg.cc/Y0ByN4Rt/000000086168.jpg", 
-        "img2": "https://i.postimg.cc/N0TMJSYB/000000086168.jpg" 
+        "img2": "https://i.postimg.cc/RFHDn1cP/000000065270.jpg",
+        "img3": "https://i.postimg.cc/MTN1rD61/000000065270.jpg",
+        "img4": "https://i.postimg.cc/9FSYncfv/000000065270.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/hvQ3TLTy/000000136807.jpg",
-        "img1": "https://i.postimg.cc/vBsmphH9/000000136807.jpg",
-        "img2": "https://i.postimg.cc/dtvxLyDB/000000136807.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/C1QQRPBn/000000141475.jpg",
-        "img1": "https://i.postimg.cc/Wbnfr1kP/000000141475.jpg", 
-        "img2": "https://i.postimg.cc/6q6pQQZp/000000141475.jpg"  
+        "titleImage": "https://i.postimg.cc/63tXJQRM/000000086168.jpg",
+        "img1": "https://i.postimg.cc/L4gtgrDD/000000086168.jpg",
+        "img2": "https://i.postimg.cc/Y0ByN4Rt/000000086168.jpg",
+        "img3": "https://i.postimg.cc/N0TMJSYB/000000086168.jpg",
+        "img4": "https://i.postimg.cc/mr33kMSs/000000086168.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/jqWsZBh9/000000158306.jpg",
+        "titleImage": "https://i.postimg.cc/854V1VmN/000000136807.jpg",
+        "img1": "https://i.postimg.cc/dtvxLyDB/000000136807.jpg",
+        "img2": "https://i.postimg.cc/TwCrq6SN/000000136807.jpg",
+        "img3": "https://i.postimg.cc/hPF9Lp3B/000000136807.jpg",
+        "img4": "https://i.postimg.cc/vBsmphH9/000000136807.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/kG5PGhT8/000000141475.jpg",
+        "img1": "https://i.postimg.cc/Wbnfr1kP/000000141475.jpg",
+        "img2": "https://i.postimg.cc/6q6pQQZp/000000141475.jpg",
+        "img3": "https://i.postimg.cc/W32Gk39J/000000141475.jpg",
+        "img4": "https://i.postimg.cc/yYF0vcwS/000000141475.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/sx0dh9LL/000000158306.jpg",
         "img1": "https://i.postimg.cc/FzPskQbg/000000158306.jpg",
-        "img2": "https://i.postimg.cc/g22tKbVL/000000158306.jpg"
+        "img2": "https://i.postimg.cc/g22tKbVL/000000158306.jpg",
+        "img3": "https://i.postimg.cc/fyPmpvMx/000000158306.jpg",
+        "img4": "https://i.postimg.cc/JzxZWm7r/000000158306.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/w3K4V1k6/000000168375.jpg",
-        "img1": "https://i.postimg.cc/3r9wcgM4/000000168375.jpg",
-        "img2": "https://i.postimg.cc/P5V33Vy3/000000168375.jpg"
+        "titleImage": "https://i.postimg.cc/mZdGJBrS/000000168375.jpg",
+        "img1": "https://i.postimg.cc/255vkJ34/000000168375.jpg",
+        "img2": "https://i.postimg.cc/brr1m5fy/000000168375.jpg",
+        "img3": "https://i.postimg.cc/P5V33Vy3/000000168375.jpg",
+        "img4": "https://i.postimg.cc/3r9wcgM4/000000168375.jpg"
     },
-    // 交换
     {
-        "titleImage": "https://i.postimg.cc/K8bxcjyS/000000175197.jpg",
+        "titleImage": "https://i.postimg.cc/PrPkk9pn/000000175197.jpg",
         "img1": "https://i.postimg.cc/FsRK57mP/000000175197.jpg",
-        "img2": "https://i.postimg.cc/ydcLN1Ht/000000175197.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/mZ0TqVXr/000000185756.jpg",
-        "img1": "https://i.postimg.cc/hGHCgJHV/000000185756.jpg", 
-        "img2": "https://i.postimg.cc/Gh5mcdmb/000000185756.jpg" 
+        "img2": "https://i.postimg.cc/LXY1f1t5/000000175197.jpg",
+        "img3": "https://i.postimg.cc/SNXW8HGV/000000175197.jpg",
+        "img4": "https://i.postimg.cc/ydcLN1Ht/000000175197.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/HsXTC5R9/000000203463.jpg",
+        "titleImage": "https://i.postimg.cc/X7m6NLdG/000000185756.jpg",
+        "img1": "https://i.postimg.cc/hGHCgJHV/000000185756.jpg",
+        "img2": "https://i.postimg.cc/3rfXk32d/000000185756.jpg",
+        "img3": "https://i.postimg.cc/Gh5mcdmb/000000185756.jpg",
+        "img4": "https://i.postimg.cc/QMn7HbWv/000000185756.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/K8TS1TD9/000000203463.jpg",
         "img1": "https://i.postimg.cc/6p45qg8n/000000203463.jpg",
-        "img2": "https://i.postimg.cc/JhyT93d1/000000203463.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/W17jdV2D/000000205103.jpg",
-        "img1": "https://i.postimg.cc/2yY2bsj6/000000205103.jpg", 
-        "img2": "https://i.postimg.cc/8ChpBvBC/000000205103.jpg" 
+        "img2": "https://i.postimg.cc/JhyT93d1/000000203463.jpg",
+        "img3": "https://i.postimg.cc/9M6qBQbp/000000203463.jpg",
+        "img4": "https://i.postimg.cc/nc6q1TRx/000000203463.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/Xv7WFPJs/000000212688.jpg",
-        "img1": "https://i.postimg.cc/9f3X7b9S/000000212688.jpg",
-        "img2": "https://i.postimg.cc/FzxGjT1x/000000212688.jpg"
+        "titleImage": "https://i.postimg.cc/Bv5rgGyH/000000205103.jpg",
+        "img1": "https://i.postimg.cc/2yY2bsj6/000000205103.jpg",
+        "img2": "https://i.postimg.cc/qq26DHZd/000000205103.jpg",
+        "img3": "https://i.postimg.cc/8ChpBvBC/000000205103.jpg",
+        "img4": "https://i.postimg.cc/NjmmCTSH/000000205103.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/1t8Z7ND6/000000265096.jpg",
-        "img1": "https://i.postimg.cc/3RYKLwnF/000000265096.jpg",
-        "img2": "https://i.postimg.cc/MKddH3C6/000000265096.jpg"
+        "titleImage": "https://i.postimg.cc/YSwcYSXt/000000212688.jpg",
+        "img1": "https://i.postimg.cc/h4mmtV43/000000212688.jpg",
+        "img2": "https://i.postimg.cc/9f3X7b9S/000000212688.jpg",
+        "img3": "https://i.postimg.cc/6QKRkqx1/000000212688.jpg",
+        "img4": "https://i.postimg.cc/FzxGjT1x/000000212688.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/8CKSbbfN/000000305684.jpg",
-        "img1": "https://i.postimg.cc/vBhGCdKF/000000305684.jpg",
-        "img2": "https://i.postimg.cc/L4kyK8vZ/000000305684.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/HxF1qstN/000000313420.jpg",
-        "img1": "https://i.postimg.cc/SNygybt1/000000313420.jpg", 
-        "img2": "https://i.postimg.cc/vTmGsNR1/000000313420.jpg"  
+        "titleImage": "https://i.postimg.cc/PxtBVRsc/000000265096.jpg",
+        "img1": "https://i.postimg.cc/FsQLd17F/000000265096.jpg",
+        "img2": "https://i.postimg.cc/3RYKLwnF/000000265096.jpg",
+        "img3": "https://i.postimg.cc/6QhRtK96/000000265096.jpg",
+        "img4": "https://i.postimg.cc/MKddH3C6/000000265096.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/Zn3z4t75/000000313603.jpg",
-        "img1": "https://i.postimg.cc/ZnD4KxZw/000000313603.jpg",
-        "img2": "https://i.postimg.cc/QdCSTkDp/000000313603.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/2jBD4hkN/000000315864.jpg",
-        "img1": "https://i.postimg.cc/0y4ndM5h/000000315864.jpg", 
-        "img2": "https://i.postimg.cc/sfnVcsS5/000000315864.jpg"  
+        "titleImage": "https://i.postimg.cc/xCtBw39d/000000305684.jpg",
+        "img1": "https://i.postimg.cc/BQc1xsKT/000000305684.jpg",
+        "img2": "https://i.postimg.cc/B6QFvz6T/000000305684.jpg",
+        "img3": "https://i.postimg.cc/L4kyK8vZ/000000305684.jpg",
+        "img4": "https://i.postimg.cc/vBhGCdKF/000000305684.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/X7f6PWB2/000000324436.jpg",
-        "img1": "https://i.postimg.cc/rFKqZ3C3/000000324436.jpg",
-        "img2": "https://i.postimg.cc/25BwHkVy/000000324436.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/MK28tHHM/000000342614.jpg",
-        "img1": "https://i.postimg.cc/TwMcFzD9/000000342614.jpg", 
-        "img2": "https://i.postimg.cc/gkQmCsgJ/000000342614.jpg" 
+        "titleImage": "https://i.postimg.cc/ZnnX4vqx/000000313420.jpg",
+        "img1": "https://i.postimg.cc/LXC1gVYr/000000313420.jpg",
+        "img2": "https://i.postimg.cc/SNygybt1/000000313420.jpg",
+        "img3": "https://i.postimg.cc/g2zLs5Vf/000000313420.jpg",
+        "img4": "https://i.postimg.cc/vTmGsNR1/000000313420.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/vZGwFKWG/000000343325.jpg",
+        "titleImage": "https://i.postimg.cc/SNXHP93y/000000313603.jpg",
+        "img1": "https://i.postimg.cc/sgTQNcK1/000000313603.jpg",
+        "img2": "https://i.postimg.cc/QdCSTkDp/000000313603.jpg",
+        "img3": "https://i.postimg.cc/QCFWQWcV/000000313603.jpg",
+        "img4": "https://i.postimg.cc/ZnD4KxZw/000000313603.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/L5WwX4YK/000000315864.jpg",
+        "img1": "https://i.postimg.cc/sfnVcsS5/000000315864.jpg",
+        "img2": "https://i.postimg.cc/5yDQnNmg/000000315864.jpg",
+        "img3": "https://i.postimg.cc/PqcLt5gj/000000315864.jpg",
+        "img4": "https://i.postimg.cc/0y4ndM5h/000000315864.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/pVcgkC0G/000000324436.jpg",
+        "img1": "https://i.postimg.cc/gc7hYNPh/000000324436.jpg",
+        "img2": "https://i.postimg.cc/8CsJQ6n4/000000324436.jpg",
+        "img3": "https://i.postimg.cc/25BwHkVy/000000324436.jpg",
+        "img4": "https://i.postimg.cc/rFKqZ3C3/000000324436.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/xTWBVCVL/000000342614.jpg",
+        "img1": "https://i.postimg.cc/W3kdtPVJ/000000342614.jpg",
+        "img2": "https://i.postimg.cc/NfrHLmgz/000000342614.jpg",
+        "img3": "https://i.postimg.cc/TwMcFzD9/000000342614.jpg",
+        "img4": "https://i.postimg.cc/gkQmCsgJ/000000342614.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/YCYZrHtZ/000000343325.jpg",
         "img1": "https://i.postimg.cc/2SWrrWtx/000000343325.jpg",
-        "img2": "https://i.postimg.cc/d129Y5RK/000000343325.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/nLz8MQR5/000000348494.jpg",
-        "img1": "https://i.postimg.cc/sx34D5KG/000000348494.jpg", 
-        "img2": "https://i.postimg.cc/q7d0RRVH/000000348494.jpg" 
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/0NHTS2hN/000000394681.jpg",
-        "img1": "https://i.postimg.cc/cCTMK659/000000394681.jpg",
-        "img2": "https://i.postimg.cc/LsBSZp2Y/000000394681.jpg" 
+        "img2": "https://i.postimg.cc/x8VczFjp/000000343325.jpg",
+        "img3": "https://i.postimg.cc/bwxS9PS0/000000343325.jpg",
+        "img4": "https://i.postimg.cc/d129Y5RK/000000343325.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/FHG59xZ3/000000407826.jpg",
-        "img1": "https://i.postimg.cc/bJyhxBw6/000000407826.jpg",
-        "img2": "https://i.postimg.cc/G3jjgShF/000000407826.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/3R4PFQHF/000000411187.jpg",
-        "img1": "https://i.postimg.cc/4NNQDbmr/000000411187.jpg", 
-        "img2": "https://i.postimg.cc/Hx6CB9JT/000000411187.jpg"  
+        "titleImage": "https://i.postimg.cc/k5CZDp44/000000348494.jpg",
+        "img1": "https://i.postimg.cc/q7d0RRVH/000000348494.jpg",
+        "img2": "https://i.postimg.cc/NF8L775s/000000348494.jpg",
+        "img3": "https://i.postimg.cc/QdGW7CCx/000000348494.jpg",
+        "img4": "https://i.postimg.cc/sx34D5KG/000000348494.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/4dDj82fk/000000420704.jpg",
+        "titleImage": "https://i.postimg.cc/JhQFX5DQ/000000394681.jpg",
+        "img1": "https://i.postimg.cc/ZqJBfQ6G/000000394681.jpg",
+        "img2": "https://i.postimg.cc/LsBSZp2Y/000000394681.jpg",
+        "img3": "https://i.postimg.cc/598HV1ph/000000394681.jpg",
+        "img4": "https://i.postimg.cc/cCTMK659/000000394681.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/9MFnYwyH/000000407826.jpg",
+        "img1": "https://i.postimg.cc/G3jjgShF/000000407826.jpg",
+        "img2": "https://i.postimg.cc/mrVcKSwt/000000407826.jpg",
+        "img3": "https://i.postimg.cc/RV9WC8DN/000000407826.jpg",
+        "img4": "https://i.postimg.cc/bJyhxBw6/000000407826.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/cH9591cg/000000411187.jpg",
+        "img1": "https://i.postimg.cc/Hx6CB9JT/000000411187.jpg",
+        "img2": "https://i.postimg.cc/Nf45K43b/000000411187.jpg",
+        "img3": "https://i.postimg.cc/TwwyxW7Q/000000411187.jpg",
+        "img4": "https://i.postimg.cc/4NNQDbmr/000000411187.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/3NkfPMLL/000000420704.jpg",
         "img1": "https://i.postimg.cc/MHXJ4fRV/000000420704.jpg",
-        "img2": "https://i.postimg.cc/VLGWmrt5/000000420704.jpg"
-    },
-    // 交换
-    {
-        "titleImage": "https://i.postimg.cc/SRc3HLRX/000000434089.jpg",
-        "img1": "https://i.postimg.cc/t4stTqdk/000000434089.jpg", 
-        "img2": "https://i.postimg.cc/PJcnkfzc/000000434089.jpg" 
+        "img2": "https://i.postimg.cc/1tj835bS/000000420704.jpg",
+        "img3": "https://i.postimg.cc/XYYXd53W/000000420704.jpg",
+        "img4": "https://i.postimg.cc/VLGWmrt5/000000420704.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/zDhsLN7J/000000435047.jpg",
-        "img1": "https://i.postimg.cc/8knSvwQH/000000435047.jpg",
-        "img2": "https://i.postimg.cc/8zxdf2tS/000000435047.jpg"
+        "titleImage": "https://i.postimg.cc/90sg2xKc/000000434089.jpg",
+        "img1": "https://i.postimg.cc/Hkvn2Lsy/000000434089.jpg",
+        "img2": "https://i.postimg.cc/kGRB6Pdb/000000434089.jpg",
+        "img3": "https://i.postimg.cc/PJcnkfzc/000000434089.jpg",
+        "img4": "https://i.postimg.cc/t4stTqdk/000000434089.jpg"
     },
     {
-        "titleImage": "https://i.postimg.cc/t4Q8dMrh/03.jpg",
-        "img1": "https://i.postimg.cc/Bv1LWt5W/03.jpg",
-        "img2": "https://i.postimg.cc/MG4LT3jM/03.jpg"
+        "titleImage": "https://i.postimg.cc/Pf7R1xx0/000000435047.jpg",
+        "img1": "https://i.postimg.cc/vm1BSdcS/000000435047.jpg",
+        "img2": "https://i.postimg.cc/8knSvwQH/000000435047.jpg",
+        "img3": "https://i.postimg.cc/t707FvXm/000000435047.jpg",
+        "img4": "https://i.postimg.cc/8zxdf2tS/000000435047.jpg"
     },
-    // 交换
     {
-        "titleImage": "https://i.postimg.cc/J7Ff0nZY/08.jpg",
-        "img1": "https://i.postimg.cc/bwyWFthJ/08.jpg", 
-        "img2": "https://i.postimg.cc/V6qJ6THD/08.jpg" 
+        "titleImage": "https://i.postimg.cc/9FMcQzkS/03.jpg",
+        "img1": "https://i.postimg.cc/MG4LT3jM/03.jpg",
+        "img2": "https://i.postimg.cc/Bv1LWt5W/03.jpg",
+        "img3": "https://i.postimg.cc/cLSBSXQm/03.jpg",
+        "img4": "https://i.postimg.cc/RVqTdWv7/03.jpg"
+    },
+    {
+        "titleImage": "https://i.postimg.cc/59pxJ8sL/08.jpg",
+        "img1": "https://i.postimg.cc/c1PcDsCP/08.jpg",
+        "img2": "https://i.postimg.cc/bwyWFthJ/08.jpg",
+        "img3": "https://i.postimg.cc/V6qJ6THD/08.jpg",
+        "img4": "https://i.postimg.cc/GtgxrCxT/08.jpg"
     }
+    
 ]
     var ratings = new Array(images.length).fill(null);
     var currentIndex = 0; 
@@ -674,7 +822,7 @@
     };
 
     function loadRatings() {
-     ['visual', 'text','layout','bg'].forEach((type) => {
+     ['visual', 'text','details','realism'].forEach((type) => {
     // 构建存储时使用的键
     var key = type + 'Rating' + currentIndex;
     // 从localStorage获取评分值
@@ -695,44 +843,46 @@
 
 // Function to change the image pair
     function changeImage(direction) {
-    currentIndex += direction;
+        currentIndex += direction;
 
-    if (currentIndex < 0) {
-        currentIndex = images.length - 1;
-    } else if (currentIndex >= images.length) {
-        currentIndex = 0;
-    }
+        if (currentIndex < 0) {
+            currentIndex = images.length - 1;
+        } else if (currentIndex >= images.length) {
+            currentIndex = 0;
+        }
 
-    var imageElements = document.querySelectorAll('.image-box');
-    imageElements[0].src = images[currentIndex].img1;
-    imageElements[1].src = images[currentIndex].img2;
+        var imageElements = document.querySelectorAll('.image-box img');
+        imageElements[0].src = images[currentIndex].img1;
+        imageElements[1].src = images[currentIndex].img2;
+        imageElements[2].src = images[currentIndex].img3;
+        imageElements[3].src = images[currentIndex].img4;
 
-    // let titleWithBreaks = images[currentIndex].title.replace(/\n/g, '<br>');
-    // document.getElementById('imageTitle').textContent = images[currentIndex].title;
-    var titleImageURL = images[currentIndex].titleImage;
-    // document.getElementById('imageTitle').innerHTML = `<img src="${titleImageURL}" alt="Title Image" style="max-width:100%; height:auto;">`;
-    document.getElementById('imageTitle').innerHTML = `
-        <img src="${titleImageURL}" alt="Title Image" style="width:512px; height:512px; display:block; margin:0 auto;">
-    `;
+        // let titleWithBreaks = images[currentIndex].title.replace(/\n/g, '<br>');
+        // document.getElementById('imageTitle').textContent = images[currentIndex].title;
+        var titleImageURL = images[currentIndex].titleImage;
+        // document.getElementById('imageTitle').innerHTML = `<img src="${titleImageURL}" alt="Title Image" style="max-width:100%; height:auto;">`;
+        document.getElementById('imageTitle').innerHTML = `
+            <img src="${titleImageURL}" alt="Title Image" style="width:512px; height:512px; display:block; margin:0 auto;">
+        `;
 
-    loadRatings();
-    slider.value = currentIndex;
-    indexInput.value = currentIndex;
-    updateRadioButtons();
-    bindImageLoadEvent();
-    updateImageBackground();
+        loadRatings();
+        slider.value = currentIndex;
+        indexInput.value = currentIndex;
+        updateRadioButtons();
+        bindImageLoadEvent();
+        updateImageBackground();
     }
     
   function updateRadioButtons() {
     var visualRadios = document.querySelectorAll('input[name="visual"]');
     var textRadios = document.querySelectorAll('input[name="text"]');
-    var layoutRadios = document.querySelectorAll('input[name="layout"]');
-    var bgRadios = document.querySelectorAll('input[name="bg"]');
+    var detailsRadios = document.querySelectorAll('input[name="details"]');
+    var realismRadios = document.querySelectorAll('input[name="realism"]');
 
     resetRadios(visualRadios);
     resetRadios(textRadios);
-    resetRadios(layoutRadios);
-    resetRadios(bgRadios);
+    resetRadios(detailsRadios);
+    resetRadios(realismRadios);
 
     if (ratings[currentIndex]) {
       if (ratings[currentIndex].visual) {
@@ -741,11 +891,11 @@
       if (ratings[currentIndex].text) {
         document.getElementById('text' + ratings[currentIndex].text).checked = true;
       }
-      if (ratings[currentIndex].layout) {
-        document.getElementById('layout' + ratings[currentIndex].layout).checked = true;
+      if (ratings[currentIndex].details) {
+        document.getElementById('details' + ratings[currentIndex].details).checked = true;
       }
-      if (ratings[currentIndex].bg) {
-        document.getElementById('bg' + ratings[currentIndex].bg).checked = true;
+      if (ratings[currentIndex].realism) {
+        document.getElementById('realism' + ratings[currentIndex].realism).checked = true;
       }
     }
   }
@@ -760,14 +910,14 @@
     for (var i = 0; i < 200; i++) {
         var visualRating = localStorage.getItem('visualRating' + i);
         var textRating = localStorage.getItem('textRating' + i);
-        var layoutRating = localStorage.getItem('layoutRating' + i);
-        var bgRating = localStorage.getItem('bgRating' + i);
-        if (visualRating || textRating || layoutRating || bgRating) {
+        var detailsRating = localStorage.getItem('detailsRating' + i);
+        var realismRating = localStorage.getItem('realismRating' + i);
+        if (visualRating || textRating || detailsRating || realismRating) {
             ratings[i] = {
                 visual: visualRating,
                 text: textRating,
-                layout: layoutRating,
-                bg: bgRating,
+                details: detailsRating,
+                realism: realismRating,
             };
         }
     }
@@ -794,15 +944,15 @@ document.querySelectorAll('input[type="radio"]').forEach(function(radio) {
     };
     });
 
-    document.querySelectorAll('input[name="layout"]').forEach(function(radio) {
+    document.querySelectorAll('input[name="details"]').forEach(function(radio) {
         radio.onchange = function() {
-            saveRating('layout', this.value);
+            saveRating('details', this.value);
         };
         });
     
-        document.querySelectorAll('input[name="bg"]').forEach(function(radio) {
+        document.querySelectorAll('input[name="realism"]').forEach(function(radio) {
         radio.onchange = function() {
-            saveRating('bg', this.value);
+            saveRating('realism', this.value);
         };
         });
 
@@ -885,7 +1035,7 @@ function bindImageLoadEvent() {
           'welcometitle': 'Welcome to the COLE evaluation interface',
           'welcomesubtitle': "Together, let's revolutionize the world of graphic design and set new benchmarks for creativity and innovation!",
           'overalltitle': 'Overall Description',
-            'overalltext': "This is a user evaluation experiment designed to measure the success rate between two image generation methods, comparing human preferences across multiple metrics for two methods of generating <b>graphic design</b> type images (posters, greeting cards, flyers, images with interlaced text designed to convey specific information, etc.). The main focus of this experiment is to evaluate the quality of images generated by artificial intelligence, with a particular emphasis on the following four key metrics: <li> Text accuracy: Text is the core of design-type images. This metric evaluates which method generates text more accurately. The criteria include, but are not limited to, whether the font shapes are accurate without flaws and if they match the intended text as closely as possible.</li> <li> Aesthetic effect/image visual appeal and attractiveness: The visual appeal of an image is also an essential element of design-type images. This metric evaluates which method you prefer for the image effects produced, which is more visually appealing, and which better meets the aesthetic effects of design-type images.</li>            <li> Sense of design/layout rationality: Beyond text and images, the rationality of the design layout mainly measures whether the arrangement and layout of text and images are harmonious and reasonable. For example, whether text and graphic elements like text boxes are consistently placed, and whether there is any conflict between text and images.</li> <li> Background image prompt adherence: Whether the generated image and the background's text prompts are consistent. In your opinion, which method produces background images and background prompts that better match?</li> Thank you again for your participation!",
+            'overalltext': "This is a user evaluation experiment designed to measure the success rate between two image generation methods, comparing human preferences across multiple metrics for two methods of generating <b>graphic design</b> type images (posters, greeting cards, flyers, images with interlaced text designed to convey specific information, etc.). The main focus of this experiment is to evaluate the quality of images generated by artificial intelligence, with a particular emphasis on the following four key metrics: <li> Text accuracy: Text is the core of design-type images. This metric evaluates which method generates text more accurately. The criteria include, but are not limited to, whether the font shapes are accurate without flaws and if they match the intended text as closely as possible.</li> <li> Aesthetic effect/image visual appeal and attractiveness: The visual appeal of an image is also an essential element of design-type images. This metric evaluates which method you prefer for the image effects produced, which is more visually appealing, and which better meets the aesthetic effects of design-type images.</li>            <li> Sense of design/details rationality: Beyond text and images, the rationality of the design details mainly measures whether the arrangement and details of text and images are harmonious and reasonable. For example, whether text and graphic elements like text boxes are consistently placed, and whether there is any conflict between text and images.</li> <li> Background image prompt adherence: Whether the generated image and the background's text prompts are consistent. In your opinion, which method produces background images and background prompts that better match?</li> Thank you again for your participation!",
             'evaluationpipeline': 'Evaluation Pipeline',
             'starteval': "Click the 'Start Eval Trip' button to enter the main evaluation page.",
             'readintention': "Read the user intention (i.e., the input for the image generator) at the top of each page. Then, based on your assessment of the two images below, select the one that has the advantage in various criteria, where the left image is labeled as 1 and the right image as 2.",
