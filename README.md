@@ -19,18 +19,6 @@
     <img src="assets/primary_image.png" style="border-radius: 0px"><br>
 </p>
 
-The org pictures in Figures E and F of the supplementary material are incorrect; we have included the corrected versions here.
-
-Figure E.
-<p align="center">
-    <img src="assets/vq16-coco.png" style="border-radius: 0px"><br>
-</p>
-
-Figure F.
-<p align="center">
-    <img src="assets/vq32-coco.png" style="border-radius: 0px"><br>
-</p>
-
 ## <a name="requirements"></a>:eyes: Ablation Study results
 <p align="center">
     <img src="assets/abla_module.png" style="border-radius: 0px"><br>
